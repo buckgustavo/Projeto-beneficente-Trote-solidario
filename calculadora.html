@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Calculadora de Pontos — Trote Solidário UniFACEF 2026</title>
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-title">Trote Solidário 2026</span>
+            <span class="nav-logo-sub">UniFACEF · Colecionando Memórias</span>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="introducao.html">Introdução</a></li>
+            <li><a href="formato.html">Formato</a></li>
+            <li><a href="equipes.html">Equipes</a></li>
+            <li><a href="provas.html">Provas & Metas</a></li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cronograma.html">Cronograma</a></li>
+            <li><a href="calculadora.html">Calculadora</a></li>
+            <li><a href="figurinhas.html">Figurinhas</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="main" style="margin-top:30px;">
+
+    <div class="calc-hero" id="calcDisplay">
+        <div>
+            <div class="calc-label">Pontuação Total Estimada</div>
+            <span class="calc-total-num" id="totalDisplay">0</span>
+            <span class="calc-total-unit">pts</span>
+        </div>
+        <div class="calc-bkd-grid">
+            <div class="calc-bkd-item">
+                <span class="calc-bkd-icon">📦</span>
+                <span class="calc-bkd-label">Kits</span>
+                <span class="calc-bkd-val" id="bkdKit">0</span>
+            </div>
+            <div class="calc-bkd-item">
+                <span class="calc-bkd-icon">🧩</span>
+                <span class="calc-bkd-label">Avulsos</span>
+                <span class="calc-bkd-val" id="bkdAvulsos">0</span>
+            </div>
+            <div class="calc-bkd-item">
+                <span class="calc-bkd-icon">🍼</span>
+                <span class="calc-bkd-label">Suplem.</span>
+                <span class="calc-bkd-val" id="bkdSuplemento">0</span>
+            </div>
+            <div class="calc-bkd-item">
+                <span class="calc-bkd-icon">🥛</span>
+                <span class="calc-bkd-label">Leite</span>
+                <span class="calc-bkd-val" id="bkdLeite">0</span>
+            </div>
+            <div class="calc-bkd-item">
+                <span class="calc-bkd-icon">🩸</span>
+                <span class="calc-bkd-label">Sangue</span>
+                <span class="calc-bkd-val" id="bkdSangue">0</span>
+            </div>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="section-header" style="margin-bottom:16px;">
+            <h3>Selecione sua Equipe</h3>
+            <span class="badge badge-escuro">cores sorteadas em 24/02/2026</span>
+        </div>
+
+        <div class="team-btn-grid">
+            <button class="team-btn-item ativo" data-equipe="comunicacao" style="--cor:#f5c518">
+                <span class="btn-cor-label">Amarelo</span>
+                <span class="btn-equipe-nome">Comunicação Social</span>
+                <span class="btn-alunos-label">54 alunos</span>
+            </button>
+            <button class="team-btn-item" data-equipe="psicologia" style="--cor:#8e9eb2">
+                <span class="btn-cor-label">Cinza</span>
+                <span class="btn-equipe-nome">Psicologia</span>
+                <span class="btn-alunos-label">51 alunos</span>
+            </button>
+            <button class="team-btn-item" data-equipe="letras" style="--cor:#f07e1e">
+                <span class="btn-cor-label">Laranja</span>
+                <span class="btn-equipe-nome">Letras</span>
+                <span class="btn-alunos-label">21 alunos</span>
+            </button>
+            <button class="team-btn-item" data-equipe="medicina" style="--cor:#895129">
+                <span class="btn-cor-label">Marrom</span>
+                <span class="btn-equipe-nome">Medicina</span>
+                <span class="btn-alunos-label">88 alunos</span>
+            </button>
+            <button class="team-btn-item" data-equipe="computacaoB" style="--cor:#1c2b3a">
+                <span class="btn-cor-label">Preto</span>
+                <span class="btn-equipe-nome">Computação B (E.S.)</span>
+                <span class="btn-alunos-label">60 alunos</span>
+            </button>
+            <button class="team-btn-item" data-equipe="contabeis" style="--cor:#e11e8c">
+                <span class="btn-cor-label">Rosa</span>
+                <span class="btn-equipe-nome">Ciências Contábeis</span>
+                <span class="btn-alunos-label">44 alunos</span>
+            </button>
+            <button class="team-btn-item" data-equipe="engenharias" style="--cor:#7b5ea7">
+                <span class="btn-cor-label">Roxo</span>
+                <span class="btn-equipe-nome">Engenharias</span>
+                <span class="btn-alunos-label">42 alunos</span>
+            </button>
+            <button class="team-btn-item" data-equipe="computacaoA" style="--cor:#2ea44e">
+                <span class="btn-cor-label">Verde</span>
+                <span class="btn-equipe-nome">Computação A (C.C.+S.I.)</span>
+                <span class="btn-alunos-label">61 alunos</span>
+            </button>
+            <button class="team-btn-item" data-equipe="administracao" style="--cor:#e53e3e">
+                <span class="btn-cor-label">Vermelho</span>
+                <span class="btn-equipe-nome">Administração</span>
+                <span class="btn-alunos-label">32 alunos</span>
+            </button>
+        </div>
+
+        <div class="team-meta-strip">
+            <span>Meta Kit: <strong id="infoMetaKit">54</strong></span>
+            <span>Meta Suplem.: <strong id="infoMetaSuplemento">27</strong></span>
+            <span>Meta Leite: <strong id="infoMetaLeite">54</strong> L</span>
+            <span>Meta Sangue: <strong id="infoMetaSangue">27</strong></span>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <div class="prova-num">1</div>
+                <h3>Kit Alimentação</h3>
+            </div>
+            <span class="section-pts-badge" id="ptsProva1">+0 pts</span>
+        </div>
+
+        <!-- Kits completos (meta proporcional) -->
+        <p style="font-size:.84rem;color:var(--cinza);margin-bottom:12px;">
+            <strong>Kits completos</strong> — pontuação proporcional: cada kit vale
+            <strong id="ptsPorKit">—</strong> pts (= 5.000 ÷ meta da equipe).
+            Kits acima da meta geram pontos extras na mesma proporção.
+        </p>
+        <div class="meta-row" style="margin-bottom:16px;">
+            <div class="meta-header">
+                <span class="meta-nome">📦 Kits completos entregues</span>
+                <span class="meta-cnt" id="labelMetaKit">0 / 54</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="barraKit"></div>
+            </div>
+            <input type="number" class="item-input" id="qtdeKits" value="0" min="0" />
+        </div>
+
+        <!-- Itens avulsos -->
+        <p style="font-size:.84rem;color:var(--cinza);margin-bottom:12px;margin-top:18px;">
+            <strong>Itens avulsos</strong> — kits incompletos ou itens extras são pontuados
+            individualmente nas tabelas abaixo (3.1.2 do regulamento):
+        </p>
+
+        <div class="item-row">
+            <div class="item-info">
+                <span class="item-nome">🌾 Arroz Tipo 1 — Pacote 5 kg</span>
+                <span class="item-pts-u">10 pts / pacote</span>
+            </div>
+            <input type="number" class="item-input" id="qtdeArroz5" value="0" min="0" />
+        </div>
+        <div class="item-row">
+            <div class="item-info">
+                <span class="item-nome">🌾 Arroz Tipo 1 — Pacote 1 kg</span>
+                <span class="item-pts-u">2 pts / pacote</span>
+            </div>
+            <input type="number" class="item-input" id="qtdeArroz1" value="0" min="0" />
+        </div>
+        <div class="item-row">
+            <div class="item-info">
+                <span class="item-nome">🫘 Feijão Carioca — Pacote 2 kg</span>
+                <span class="item-pts-u">8 pts / pacote</span>
+            </div>
+            <input type="number" class="item-input" id="qtdeFeijao2" value="0" min="0" />
+        </div>
+        <div class="item-row">
+            <div class="item-info">
+                <span class="item-nome">🫘 Feijão Carioca — Pacote 1 kg</span>
+                <span class="item-pts-u">4 pts / pacote</span>
+            </div>
+            <input type="number" class="item-input" id="qtdeFeijao1" value="0" min="0" />
+        </div>
+        <div class="item-row">
+            <div class="item-info">
+                <span class="item-nome">🫙 Óleo de Soja — 1 unidade (900 mL / 1 L)</span>
+                <span class="item-pts-u">4 pts / unidade</span>
+            </div>
+            <input type="number" class="item-input" id="qtdeOleo" value="0" min="0" />
+        </div>
+        <div class="item-row">
+            <div class="item-info">
+                <span class="item-nome">🍝 Macarrão — Pacote 500 g</span>
+                <span class="item-pts-u">2 pts / pacote</span>
+            </div>
+            <input type="number" class="item-input" id="qtdeMacarrao" value="0" min="0" />
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <h3>Provas 2, 3 e 4 — Metas</h3>
+            <span class="section-pts-badge" id="ptsMetas">+0 pts</span>
+        </div>
+        <p style="font-size:.84rem;color:var(--cinza);margin-bottom:18px;">
+            Cada prova tem meta própria. Ao cumprir a meta a equipe garante <strong>5.000 pontos</strong>.
+            Superar a meta gera pontos extras proporcionais; ficar abaixo reduz na mesma proporção.
+        </p>
+
+        <div class="meta-row">
+            <div class="meta-header">
+                <span class="meta-nome">🍼 Prova 2 — Suplementos (latas 400 g Ensure/Nutren 1.0)</span>
+                <span class="meta-cnt" id="labelMetaSuplemento">0 / 27</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="barraSuplemento"></div>
+            </div>
+            <input type="number" class="item-input" id="qtdeSuplemento" value="0" min="0" />
+        </div>
+
+        <div class="meta-row">
+            <div class="meta-header">
+                <span class="meta-nome">🥛 Prova 3 — Leite UHT (litros, validade após 02/06/2026)</span>
+                <span class="meta-cnt" id="labelMetaLeite">0 / 54</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="barraLeite"></div>
+            </div>
+            <input type="number" class="item-input" id="qtdeLeite" value="0" min="0" />
+        </div>
+
+        <div class="meta-row">
+            <div class="meta-header">
+                <span class="meta-nome">🩸 Prova 4 — Doações de Sangue (comprovante obrigatório)</span>
+                <span class="meta-cnt" id="labelMetaSangue">0 / 27</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="barraSangue"></div>
+            </div>
+            <input type="number" class="item-input" id="qtdeSangue" value="0" min="0" />
+        </div>
+    </section>
+
+    <section class="section" style="background:var(--fundo);box-shadow:none;border:1.5px solid #d9e4ea;">
+        <div class="section-header">
+            <h3>Regras do Cálculo (Regulamento 3.1.2 – 3.1.5)</h3>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Prova</th>
+                        <th>Meta</th>
+                        <th>Pts/unidade</th>
+                        <th>Meta cumprida</th>
+                        <th>Observação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1 — Kit Alimentação</strong></td>
+                        <td>1 kit / aluno</td>
+                        <td>5.000 ÷ meta</td>
+                        <td><strong>5.000 pts</strong></td>
+                        <td>Kits incompletos pontuados como avulsos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2 — Suplementos</strong></td>
+                        <td>1 lata / 2 alunos</td>
+                        <td>5.000 ÷ meta</td>
+                        <td><strong>5.000 pts</strong></td>
+                        <td>Apenas latas de 400 g (Ensure/Nutren 1.0)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3 — Leite UHT</strong></td>
+                        <td>1 L / aluno</td>
+                        <td>5.000 ÷ meta</td>
+                        <td><strong>5.000 pts</strong></td>
+                        <td>Validade posterior a 02/06/2026</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4 — Doação Sangue</strong></td>
+                        <td>1 doação / 2 alunos</td>
+                        <td>5.000 ÷ meta</td>
+                        <td><strong>5.000 pts</strong></td>
+                        <td>Comprovante do hemocentro obrigatório</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-grid" style="margin-top:18px;">
+            <div class="card verde">
+                <h4>Acima da meta</h4>
+                <p>Cada item extra vale o mesmo pts/unidade.<br>
+                Ex.: meta 100 kits, 110 entregues → 110 × 50 = <strong>5.500 pts</strong> (+500 extra).</p>
+            </div>
+            <div class="card laranja">
+                <h4>Abaixo da meta</h4>
+                <p>Pontuação proporcional ao alcançado.<br>
+                Ex.: meta 100 kits, 90 entregues → 90 × 50 = <strong>4.500 pts</strong>.</p>
+            </div>
+            <div class="card azul">
+                <h4>Pontuação máxima</h4>
+                <p>Cumprindo todas as 4 metas + avulsos:<br>
+                <strong>≥ 20.000 pts</strong> (4 × 5.000 pts de base).</p>
+            </div>
+        </div>
+
+        <div class="alert-box" style="margin-top:16px;">
+            ⚠️ <strong>Itens avulsos</strong> (Prova 1) são contabilizados SEPARADAMENTE dos kits completos —
+            informe apenas itens fora dos kits completos ou de kits incompletos.
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p><strong>Trote Solidário UniFACEF 2026</strong> — Colecionando memórias de Solidariedade</p>
+    <p>Coordenação: <a href="mailto:trotesolidario@facef.br">trotesolidario@facef.br</a></p>
+    <p>Av. Ismael Alonso y Alonso, 2400 — Bairro São José — Franca/SP · Fone: (16) 3713-4688</p>
+</footer>
+
+<script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Álbum de Figurinhas — Trote Solidário UniFACEF 2026</title>
+    <style>
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(var(--rgb, 26,180,211), .45); }
+            70%  { box-shadow: 0 0 0 8px rgba(var(--rgb, 26,180,211), 0); }
+            100% { box-shadow: 0 0 0 0 rgba(var(--rgb, 26,180,211), 0); }
+        }
+
+        .fig-counter {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .fig-counter-item {
+            background: var(--branco);
+            border-radius: var(--radius);
+            padding: 14px 24px;
+            text-align: center;
+            box-shadow: var(--sombra);
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .fig-counter-num {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--azul);
+            line-height: 1;
+        }
+
+        .fig-counter-label {
+            font-size: .72rem;
+            color: var(--cinza);
+            font-weight: 500;
+            margin-top: 3px;
+        }
+
+        .fig-list { display: flex; flex-direction: column; gap: 16px; }
+
+        .fig-item {
+            background: var(--branco);
+            border-radius: var(--radius);
+            border-left: 6px solid var(--cor-equipe, var(--azul));
+            box-shadow: var(--sombra);
+            overflow: hidden;
+            opacity: 0; /* preenchido pelo JS */
+            animation: slideUp .45s ease both;
+            transition: box-shadow .25s, transform .2s;
+        }
+
+        .fig-item:hover {
+            box-shadow: var(--sombra-md);
+            transform: translateX(3px);
+        }
+        .fig-item-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .fig-item-id {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .fig-cor-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 3px solid rgba(0,0,0,.1);
+            flex-shrink: 0;
+            margin-top: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.18);
+        }
+
+        .fig-info-nome {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--escuro);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .fig-cor-pill {
+            font-size: .65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            background: var(--cor-equipe, var(--azul));
+            color: #fff;
+            padding: 2px 9px;
+            border-radius: 99px;
+        }
+
+        .fig-cor-pill.pill-dark { color: #fff; }
+
+        .fig-info-meta {
+            font-size: .8rem;
+            color: var(--cinza);
+            line-height: 1.55;
+        }
+
+        .fig-open-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--cor-equipe, var(--azul));
+            color: #fff !important;
+            font-family: 'Poppins', sans-serif;
+            font-size: .82rem;
+            font-weight: 700;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: filter .2s, transform .15s;
+        }
+
+        .fig-open-btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+
+        .fig-preview-row {
+            border-top: 2px solid color-mix(in srgb, var(--cor-equipe, var(--azul)) 35%, white);
+            background: color-mix(in srgb, var(--cor-equipe, var(--azul)) 10%, white);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-preview {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--cor-equipe, var(--azul));
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: .82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: filter .2s, transform .15s;
+        }
+
+        .btn-preview:hover { filter: brightness(1.12); transform: translateY(-1px); }
+
+        .fig-preview-hint {
+            font-size: .76rem;
+            color: var(--cinza);
+            font-style: italic;
+        }
+
+        /* iframe do Canva */
+        .canva-embed {
+            display: none;
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-top: 1px solid rgba(0,0,0,.08);
+            animation: fadeIn .35s ease;
+        }
+
+        .rules-details {
+            border: 1px solid #d9e4ea;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-top: 28px;
+            animation: slideUp .5s .5s both;
+        }
+
+        .rules-summary {
+            background: var(--escuro);
+            color: var(--branco);
+            padding: 16px 22px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: .95rem;
+            font-weight: 700;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background .2s;
+        }
+
+        .rules-summary::-webkit-details-marker { display: none; }
+        .rules-summary:hover { background: #2c4a60; }
+
+        .rules-summary-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: .82rem;
+            opacity: .75;
+        }
+
+        .rules-chevron {
+            font-size: 1rem;
+            transition: transform .3s ease;
+            display: inline-block;
+        }
+
+        .rules-details[open] .rules-chevron { transform: rotate(180deg); }
+
+        .rules-body {
+            background: var(--branco);
+            padding: 24px 26px;
+        }
+
+        @media (max-width: 640px) {
+            .fig-item-top { flex-direction: column; align-items: flex-start; }
+            .fig-open-btn { width: 100%; justify-content: center; }
+            .canva-embed  { height: 320px; }
+            .fig-counter  { gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-title">Trote Solidário 2026</span>
+            <span class="nav-logo-sub">UniFACEF · Colecionando Memórias</span>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="introducao.html">Introdução</a></li>
+            <li><a href="formato.html">Formato</a></li>
+            <li><a href="equipes.html">Equipes</a></li>
+            <li><a href="provas.html">Provas & Metas</a></li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cronograma.html">Cronograma</a></li>
+            <li><a href="calculadora.html">Calculadora</a></li>
+            <li><a href="figurinhas.html">Figurinhas</a></li>
+        </ul>
+    </div>
+</nav>
+
+<header class="hero hero-page">
+    <h1>Álbum de Figurinhas</h1>
+    <h2>7ª Prova · Colecionando Memórias de Solidariedade · Tabela 10</h2>
+</header>
+
+<main class="main">
+
+    <section class="section">
+        <div class="section-header">
+            <h3>Álbuns por Equipe — Uni-FACEF 2026</h3>
+            <span class="badge badge-verde">🏅 Medalha de Menção Honrosa</span>
+        </div>
+        <p>
+            Cada equipe preenche seu álbum digital no <strong>Canva</strong> com fotos de todas
+            as provas da 1ª Etapa. Clique em <strong>"Abrir no Canva"</strong> para editar ou
+            feche a prévia para economizar espaço.
+        </p>
+    </section>
+
+    <!-- Lista de equipes -->
+    <section class="section">
+        <div class="section-header">
+            <h3>Selecione sua equipe e acesse o álbum</h3>
+            <span class="badge badge-escuro">cores sorteadas em 24/02/2026</span>
+        </div>
+
+        <div class="fig-list">
+
+            <!-- 1. Comunicação Social — Amarelo -->
+            <div class="fig-item" style="--cor-equipe:#f5c518;">
+                <div class="fig-item-top">
+                    <div class="fig-item-id">
+                        <span class="fig-cor-dot" style="background:#f5c518;"></span>
+                        <div>
+                            <div class="fig-info-nome">
+                                Comunicação Social
+                                <span class="fig-cor-pill" style="color:#1a1200;">Amarelo</span>
+                            </div>
+                            <div class="fig-info-meta">
+                                Comunicação Social — Publ. e Propaganda · 54 alunos<br>
+                                👨‍🏫 Prof. Me. Paulo Cinti
+                            </div>
+                        </div>
+                    </div>
+                    <a class="fig-open-btn" style="color:#1a1200!important;"
+                       href="https://www.canva.com/design/DAHBsWU1Jd0/_X2TYoUBhGSgeLI5G92a4g/edit"
+                       target="_blank" rel="noopener">✏️ Abrir no Canva</a>
+                </div>
+                <div class="fig-preview-row">
+                    <button class="btn-preview" onclick="toggleCanva(this)">🎨 Ver prévia do álbum</button>
+                    <span class="fig-preview-hint">prévia carregada — clique para fechar</span>
+                </div>
+                <iframe data-src="https://www.canva.com/design/DAHBsWU1Jd0/_X2TYoUBhGSgeLI5G92a4g/view?embed"
+                    class="canva-embed" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
+            </div>
+
+            <!-- 2. Psicologia — Cinza -->
+            <div class="fig-item" style="--cor-equipe:#8e9eb2;">
+                <div class="fig-item-top">
+                    <div class="fig-item-id">
+                        <span class="fig-cor-dot" style="background:#8e9eb2;"></span>
+                        <div>
+                            <div class="fig-info-nome">
+                                Psicologia
+                                <span class="fig-cor-pill">Cinza</span>
+                            </div>
+                            <div class="fig-info-meta">
+                                Psicologia · 51 alunos<br>
+                                👩‍🏫 Prof.ª Dr.ª Daniela de Figueiredo Ribeiro
+                            </div>
+                        </div>
+                    </div>
+                    <a class="fig-open-btn"
+                       href="https://www.canva.com/design/DAHBsTEZc6w/JrBlvunHgc7owCwmMlDnTg/edit"
+                       target="_blank" rel="noopener">✏️ Abrir no Canva</a>
+                </div>
+                <div class="fig-preview-row">
+                    <button class="btn-preview" onclick="toggleCanva(this)">🎨 Ver prévia do álbum</button>
+                    <span class="fig-preview-hint">prévia carregada — clique para fechar</span>
+                </div>
+                <iframe data-src="https://www.canva.com/design/DAHBsTEZc6w/JrBlvunHgc7owCwmMlDnTg/view?embed"
+                    class="canva-embed" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
+            </div>
+
+            <!-- 3. Letras — Laranja -->
+            <div class="fig-item" style="--cor-equipe:#f07e1e;">
+                <div class="fig-item-top">
+                    <div class="fig-item-id">
+                        <span class="fig-cor-dot" style="background:#f07e1e;"></span>
+                        <div>
+                            <div class="fig-info-nome">
+                                Letras
+                                <span class="fig-cor-pill">Laranja</span>
+                            </div>
+                            <div class="fig-info-meta">
+                                Letras · 21 alunos<br>
+                                👩‍🏫 Prof.ª Dr.ª Maria Eloisa de Souza Ivan
+                            </div>
+                        </div>
+                    </div>
+                    <a class="fig-open-btn"
+                       href="https://www.canva.com/design/DAHBsYhOwB0/dbqKZ1uyjh-e8-Rjcdl_Ww/edit"
+                       target="_blank" rel="noopener">✏️ Abrir no Canva</a>
+                </div>
+                <div class="fig-preview-row">
+                    <button class="btn-preview" onclick="toggleCanva(this)">🎨 Ver prévia do álbum</button>
+                    <span class="fig-preview-hint">prévia carregada — clique para fechar</span>
+                </div>
+                <iframe data-src="https://www.canva.com/design/DAHBsYhOwB0/dbqKZ1uyjh-e8-Rjcdl_Ww/view?embed"
+                    class="canva-embed" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
+            </div>
+
+            <!-- 4. Medicina — Marrom -->
+            <div class="fig-item" style="--cor-equipe:#895129;">
+                <div class="fig-item-top">
+                    <div class="fig-item-id">
+                        <span class="fig-cor-dot" style="background:#895129;"></span>
+                        <div>
+                            <div class="fig-info-nome">
+                                Medicina
+                                <span class="fig-cor-pill">Marrom</span>
+                            </div>
+                            <div class="fig-info-meta">
+                                Medicina · 88 alunos<br>
+                                👩‍🏫 Prof.ª Esp. Maria Paula de Paula Nascimento
+                            </div>
+                        </div>
+                    </div>
+                    <a class="fig-open-btn"
+                       href="https://www.canva.com/design/DAHBsdVe6P8/5rAPEz_E7QqO1Osvjnly_A/edit"
+                       target="_blank" rel="noopener">✏️ Abrir no Canva</a>
+                </div>
+                <div class="fig-preview-row">
+                    <button class="btn-preview" onclick="toggleCanva(this)">🎨 Ver prévia do álbum</button>
+                    <span class="fig-preview-hint">prévia carregada — clique para fechar</span>
+                </div>
+                <iframe data-src="https://www.canva.com/design/DAHBsdVe6P8/5rAPEz_E7QqO1Osvjnly_A/view?embed"
+                    class="canva-embed" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
+            </div>
+
+            <!-- 5. Computação B (Eng. Software) — Preto -->
+            <div class="fig-item" style="--cor-equipe:#181d22;">
+                <div class="fig-item-top">
+                    <div class="fig-item-id">
+                        <span class="fig-cor-dot" style="background:#181d22;"></span>
+                        <div>
+                            <div class="fig-info-nome">
+                                Computação B (E.S.)
+                                <span class="fig-cor-pill pill-dark" style="background:#181d22;">Preto</span>
+                            </div>
+                            <div class="fig-info-meta">
+                                Engenharia de Software · 60 alunos<br>
+                                👨‍🏫 Prof. Me. Carlos Alberto Lucas
+                            </div>
+                        </div>
+                    </div>
+                    <a class="fig-open-btn"
+                       href="https://www.canva.com/design/DAHBsZ08LNE/u0U_kRHjFXcCLFQ_MHfIOQ/edit"
+                       target="_blank" rel="noopener">✏️ Abrir no Canva</a>
+                </div>
+                <div class="fig-preview-row">
+                    <button class="btn-preview" onclick="toggleCanva(this)">🎨 Ver prévia do álbum</button>
+                    <span class="fig-preview-hint">prévia carregada — clique para fechar</span>
+                </div>
+                <iframe data-src="https://www.canva.com/design/DAHBsZ08LNE/u0U_kRHjFXcCLFQ_MHfIOQ/view?embed"
+                    class="canva-embed" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
+            </div>
+
+            <!-- 6. Ciências Contábeis — Rosa -->
+            <div class="fig-item" style="--cor-equipe:#e11e8c;">
+                <div class="fig-item-top">
+                    <div class="fig-item-id">
+                        <span class="fig-cor-dot" style="background:#e11e8c;"></span>
+                        <div>
+                            <div class="fig-info-nome">
+                                Ciências Contábeis
+                                <span class="fig-cor-pill">Rosa</span>
+                            </div>
+                            <div class="fig-info-meta">
+                                Ciências Contábeis · 44 alunos<br>
+                                👩‍🏫 Prof.ª M.ª Letícia Faleiros Chaves Rodrigues
+                            </div>
+                        </div>
+                    </div>
+                    <a class="fig-open-btn"
+                       href="https://www.canva.com/design/DAHBsc62iUY/roq8zCxlImkJgejc0ziylQ/edit"
+                       target="_blank" rel="noopener">✏️ Abrir no Canva</a>
+                </div>
+                <div class="fig-preview-row">
+                    <button class="btn-preview" onclick="toggleCanva(this)">🎨 Ver prévia do álbum</button>
+                    <span class="fig-preview-hint">prévia carregada — clique para fechar</span>
+                </div>
+                <iframe data-src="https://www.canva.com/design/DAHBsc62iUY/roq8zCxlImkJgejc0ziylQ/view?embed"
+                    class="canva-embed" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
+            </div>
+
+            <!-- 7. Engenharias — Roxo -->
+            <div class="fig-item" style="--cor-equipe:#7b5ea7;">
+                <div class="fig-item-top">
+                    <div class="fig-item-id">
+                        <span class="fig-cor-dot" style="background:#7b5ea7;"></span>
+                        <div>
+                            <div class="fig-info-nome">
+                                Engenharias
+                                <span class="fig-cor-pill">Roxo</span>
+                            </div>
+                            <div class="fig-info-meta">
+                                Eng. Civil + Eng. de Produção · 42 alunos<br>
+                                👩‍🏫 Prof.ª Dr.ª Ana Lúcia Bassi
+                            </div>
+                        </div>
+                    </div>
+                    <a class="fig-open-btn"
+                       href="https://www.canva.com/design/DAHBsS2fk94/Wm6EpVfWrcDN2R107Qv4Kw/edit"
+                       target="_blank" rel="noopener">✏️ Abrir no Canva</a>
+                </div>
+                <div class="fig-preview-row">
+                    <button class="btn-preview" onclick="toggleCanva(this)">🎨 Ver prévia do álbum</button>
+                    <span class="fig-preview-hint">prévia carregada — clique para fechar</span>
+                </div>
+                <iframe data-src="https://www.canva.com/design/DAHBsS2fk94/Wm6EpVfWrcDN2R107Qv4Kw/view?embed"
+                    class="canva-embed" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
+            </div>
+
+            <!-- 8. Computação A (C.C. + S.I.) — Verde -->
+            <div class="fig-item" style="--cor-equipe:#2ea44e;">
+                <div class="fig-item-top">
+                    <div class="fig-item-id">
+                        <span class="fig-cor-dot" style="background:#2ea44e;"></span>
+                        <div>
+                            <div class="fig-info-nome">
+                                Computação A (C.C. + S.I.)
+                                <span class="fig-cor-pill">Verde</span>
+                            </div>
+                            <div class="fig-info-meta">
+                                Ciência da Computação + Sistemas de Informação · 61 alunos<br>
+                                👩‍🏫 Profa. Dra. Jaqueline Brigladori Pugliesi
+                            </div>
+                        </div>
+                    </div>
+                    <a class="fig-open-btn"
+                       href="https://www.canva.com/design/DAHBscyN4Tw/sQ3YKmkURHwPPi_20Xoj9w/edit"
+                       target="_blank" rel="noopener">✏️ Abrir no Canva</a>
+                </div>
+                <div class="fig-preview-row">
+                    <button class="btn-preview" onclick="toggleCanva(this)">🎨 Ver prévia do álbum</button>
+                    <span class="fig-preview-hint">prévia carregada — clique para fechar</span>
+                </div>
+                <iframe data-src="https://www.canva.com/design/DAHBscyN4Tw/sQ3YKmkURHwPPi_20Xoj9w/view?embed"
+                    class="canva-embed" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
+            </div>
+
+            <!-- 9. Administração — Vermelho -->
+            <div class="fig-item" style="--cor-equipe:#e53e3e;">
+                <div class="fig-item-top">
+                    <div class="fig-item-id">
+                        <span class="fig-cor-dot" style="background:#e53e3e;"></span>
+                        <div>
+                            <div class="fig-info-nome">
+                                Administração
+                                <span class="fig-cor-pill">Vermelho</span>
+                            </div>
+                            <div class="fig-info-meta">
+                                Administração · 32 alunos<br>
+                                👨‍🏫 Prof. Ms. Cyro de Almeida Durigan
+                            </div>
+                        </div>
+                    </div>
+                    <a class="fig-open-btn"
+                       href="https://www.canva.com/design/DAHBsdrswS4/UTHq3Ja5VbQ95OPcU8YAyA/edit"
+                       target="_blank" rel="noopener">✏️ Abrir no Canva</a>
+                </div>
+                <div class="fig-preview-row">
+                    <button class="btn-preview" onclick="toggleCanva(this)">🎨 Ver prévia do álbum</button>
+                    <span class="fig-preview-hint">prévia carregada — clique para fechar</span>
+                </div>
+                <iframe data-src="https://www.canva.com/design/DAHBsdrswS4/UTHq3Ja5VbQ95OPcU8YAyA/view?embed"
+                    class="canva-embed" frameborder="0" allowfullscreen allow="fullscreen"></iframe>
+            </div>
+
+        </div>
+
+        <details class="rules-details">
+            <summary class="rules-summary">
+                <span>📋 Regras da 7ª Prova — clique para ver o regulamento</span>
+                <span class="rules-summary-right">
+                    3.1.8 do Regulamento
+                    <span class="rules-chevron">▼</span>
+                </span>
+            </summary>
+            <div class="rules-body">
+                <div class="card-grid">
+                    <div class="card azul">
+                        <h4>📸 O que fotografar</h4>
+                        <p>Fotos de todas as provas da 1ª Etapa: Alimentos, Suplementos, Leite,
+                        Doação de Sangue, Memórias Uni-FACEF e Ação Social.</p>
+                    </div>
+                    <div class="card verde">
+                        <h4>📐 Requisitos técnicos</h4>
+                        <p>Resolução mínima <strong>1080 × 1920 px (FullHD)</strong>.
+                        Formatos aceitos: <strong>JPEG · HEIC · PNG</strong>.</p>
+                    </div>
+                    <div class="card laranja">
+                        <h4>📅 Prazo e entrega</h4>
+                        <p>Álbum deve estar completo antes da <strong>Noite de Encerramento —
+                        27/03/2026</strong>. Preenchido diretamente no Canva pelo link da equipe.</p>
+                    </div>
+                </div>
+                <ul class="lista-check" style="margin-top:18px;">
+                    <li>🏅 <div>Todas as equipes que completarem o álbum recebem a <strong>Medalha de Menção Honrosa</strong> na Noite de Encerramento — independente de classificação.</div></li>
+                    <li>📚 <div>As imagens serão arquivadas como <strong>registro histórico oficial dos 75 anos do Uni-FACEF</strong>.</div></li>
+                    <li>🔐 <div>Cada equipe tem um álbum exclusivo no Canva. <strong>Não edite o álbum de outra equipe.</strong></div></li>
+                    <li>🎯 <div>A prova está associada à <strong>Homenagem aos 75 anos do Uni-FACEF</strong> e ao tema "Colecionando Memórias de Solidariedade".</div></li>
+                </ul>
+            </div>
+        </details>
+
+    </section>
+
+</main>
+
+<footer>
+    <p><strong>Trote Solidário UniFACEF 2026</strong> — Colecionando memórias de Solidariedade</p>
+    <p>Coordenação: <a href="mailto:trotesolidario@facef.br">trotesolidario@facef.br</a></p>
+    <p>Av. Ismael Alonso y Alonso, 2400 — Bairro São José — Franca/SP · Fone: (16) 3713-4688</p>
+</footer>
+
+<script src="scripts.js"></script>
+<script>
+/* Inicialização específica desta página */
+document.addEventListener('DOMContentLoaded', () => {
+    const items   = document.querySelectorAll('.fig-item');
+    const iframes = document.querySelectorAll('.canva-embed');
+    const btns    = document.querySelectorAll('.btn-preview');
+
+    items.forEach((el, i) => {
+        el.style.animationDelay = `${i * 0.07}s`;
+    });
+
+    iframes.forEach((iframe, i) => {
+        setTimeout(() => {
+            if (!iframe.src && iframe.dataset.src) {
+                iframe.src = iframe.dataset.src;
+            }
+            iframe.style.display = 'block';
+        }, i * 300); /* 300 ms entre cada carga */
+    });
+
+    btns.forEach(btn => {
+        btn.textContent = '✕ Fechar prévia';
+    });
+});
+</script>
+</body>
+</html>

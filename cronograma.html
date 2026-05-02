@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Cronograma — Trote Solidário UniFACEF 2026</title>
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+            <span class="nav-logo-title">Trote Solidário 2026</span>
+            <span class="nav-logo-sub">UniFACEF · Colecionando Memórias</span>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="introducao.html">Introdução</a></li>
+            <li><a href="formato.html">Formato</a></li>
+            <li><a href="equipes.html">Equipes</a></li>
+            <li><a href="provas.html">Provas & Metas</a></li>
+            <li><a href="integracao.html">Integração</a></li>
+            <li><a href="cronograma.html">Cronograma</a></li>
+            <li><a href="calculadora.html">Calculadora</a></li>
+                <li><a href="figurinhas.html">Figurinhas</a></li>
+        </ul>
+    </div>
+</nav>
+
+<header class="hero hero-page">
+    <h1>Cronograma</h1>
+    <h2>Datas e locais importantes — Fevereiro e Março 2026</h2>
+</header>
+
+<main class="main">
+
+    <section class="section">
+        <div class="section-header">
+            <h3>Datas do Trote Solidário 2026</h3>
+            <span class="badge badge-azul">4 marcos principais</span>
+        </div>
+
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-data">24 de Fevereiro de 2026 — 18h15</div>
+                <div class="tl-desc">
+                    <strong>Abertura Oficial do Trote Solidário 2026</strong><br>
+                    Auditório "Edna Maria Campanhol" — Unidade II<br>
+                    Fala de boas-vindas, apresentação do regulamento e <strong>sorteio das cores</strong>
+                    das equipes, salas de entrega e ordem de apresentação na noite de encerramento.
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot laranja"></div>
+                <div class="tl-data">02 de Março de 2026</div>
+                <div class="tl-desc">
+                    <strong>Prazo: Comunicação da Entidade Social Escolhida</strong><br>
+                    Via grupo do WhatsApp de Líderes — para validação pela comissão organizadora.<br>
+                    Serão admitidas até 2 (duas) equipes por segmento de entidade. Quanto antes
+                    comunicado, maior a chance do segmento estar disponível.
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot verde"></div>
+                <div class="tl-data">24 de Março de 2026 — 8h às 10h</div>
+                <div class="tl-desc">
+                    <strong>Entrega das Arrecadações</strong><br>
+                    Unidade I — Av. Major Nicácio, 2433 (em salas definidas por sorteio)<br>
+                    Entrega de: <strong>Kits de Alimentação</strong>, <strong>Suplementos</strong>,
+                    <strong>Leite</strong>, <strong>comprovantes de Doação de Sangue</strong> e
+                    <strong>relatório da Ação Social</strong> (até 16h no link do Drive).<br>
+                    Incluir lista de alunos doadores para controle dos certificados de horas-atividade.
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-dot magenta"></div>
+                <div class="tl-data">27 de Março de 2026 — 19h15</div>
+                <div class="tl-desc">
+                    <strong>Noite de Encerramento — Integração e Envolvimento</strong><br>
+                    Hall Central do Uni-FACEF — Unidade II<br>
+                    Gincanas, Apresentação Cultural (Homenagem 75 anos), Mascote, Caracterização,
+                    Apresentação das Ações Sociais em vídeo e <strong>divulgação dos resultados</strong>
+                    da 1ª Etapa.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <h3>Locais</h3>
+            <span class="badge badge-escuro">2 unidades</span>
+        </div>
+        <div class="locais-grid">
+            <div class="local-card">
+                <h4>Unidade I — Entrega das Arrecadações</h4>
+                <p>Av. Major Nicácio, 2433 — Franca/SP</p>
+                <p style="margin-top:6px; font-size:.82rem; color:var(--azul-escuro);">
+                    📅 24/03/2026 · das 8h às 10h · salas definidas por sorteio
+                </p>
+                <button class="btn-mapa" onclick="toggleMapa(this)">📍 Ver no mapa</button>
+                <iframe
+                    data-src="https://maps.google.com/maps?q=Av.+Major+Nic%C3%A1cio,+2433,+Franca,+SP&output=embed&z=16&hl=pt-BR"
+                    class="mapa-embed"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="local-card">
+                <h4>Unidade II — Abertura e Encerramento</h4>
+                <p>Av. Ismael Alonso y Alonso, 2400 — Bairro São José — Franca/SP</p>
+                <p style="font-size:.82rem; color:var(--azul-escuro); margin-top:6px;">
+                    📅 Abertura: 24/02 às 18h15 · Encerramento: 27/03 às 19h15
+                </p>
+                <button class="btn-mapa" onclick="toggleMapa(this)">📍 Ver no mapa</button>
+                <iframe
+                    data-src="https://maps.google.com/maps?q=Av.+Ismael+Alonso+y+Alonso,+2400,+Franca,+SP&output=embed&z=16&hl=pt-BR"
+                    class="mapa-embed"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <h3>Calendário Resumido</h3>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Evento</th>
+                        <th>Horário</th>
+                        <th>Local</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>24/02/2026</strong></td>
+                        <td>Abertura Oficial + Sorteio das Cores</td>
+                        <td>18h15</td>
+                        <td>Auditório Edna Maria Campanhol — Unidade II</td>
+                    </tr>
+                    <tr>
+                        <td><strong>02/03/2026</strong></td>
+                        <td>Prazo: comunicar entidade social à comissão</td>
+                        <td>Até 23h59</td>
+                        <td>WhatsApp de Líderes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>24/03/2026</strong></td>
+                        <td>Entrega das arrecadações (Alimentos, Suplementos, Leite, Sangue)</td>
+                        <td>8h às 10h</td>
+                        <td>Unidade I — Av. Major Nicácio, 2433</td>
+                    </tr>
+                    <tr>
+                        <td><strong>24/03/2026</strong></td>
+                        <td>Entrega do relatório + vídeo da Ação Social (Drive)</td>
+                        <td>Até 16h</td>
+                        <td>Link do Drive por equipe</td>
+                    </tr>
+                    <tr>
+                        <td><strong>27/03/2026</strong></td>
+                        <td>Noite de Encerramento + Divulgação de Resultados</td>
+                        <td>19h15</td>
+                        <td>Hall Central — Unidade II</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p><strong>Trote Solidário UniFACEF 2026</strong> — Colecionando memórias de Solidariedade</p>
+    <p>Coordenação: <a href="mailto:trotesolidario@facef.br">trotesolidario@facef.br</a></p>
+    <p>Av. Ismael Alonso y Alonso, 2400 — Bairro São José — Franca/SP · Fone: (16) 3713-4688</p>
+</footer>
+
+<script src="scripts.js"></script>
+</body>
+</html>
